@@ -46,7 +46,7 @@ git = "https://github.com/cheme/mydht-udp.git"
 
 
 
-[dev-dependencies.mydht-base] # for macro only in example
+[dependencies.mydht-base] # for macro only 
 git = "https://github.com/cheme/mydht-base.git"
 #path = "../mydht-base/"
 
