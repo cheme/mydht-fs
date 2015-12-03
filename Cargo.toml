@@ -59,7 +59,6 @@ git = "https://github.com/cheme/mydht-inefficientmap.git"
 #path = "../mydht-inefficientmap/"
 
 
-
 [dev-dependencies.mydht-basetest] # for example only
 git = "https://github.com/cheme/mydht-basetest.git"
 #path = "../mydht-basetest/"
