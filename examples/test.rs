@@ -21,7 +21,6 @@ use std::fs::{File};
 use std::path::Path;
 use std::io::Read;
 use time::Duration;
-use std::net::{SocketAddr};
 use std::env;
 use std::sync::Arc;
 //use self::rand::{thread_rng};
@@ -39,6 +38,8 @@ use mydht::dhtimpl::{SimpleCache,SimpleCacheQuery};
 //use mydht_inefficientmap::inefficientmap::Inefficientmap;
 use mydht_inefficientmap::inefficientmap;
 use mydht_basetest::node::{Node};
+// TODO mydht reexport of base
+use mydht_base::transport::{SerSocketAddr};
 use mydht::dhtif::{DHTRules};
 use mydht::transportif::Transport;
 use mydht::msgencif::{MsgEnc};
@@ -206,6 +207,11 @@ unsafe impl Send for DummyQueryRules {
 impl dhtif::DHTRules for DummyQueryRules {
 
   #[inline]
+  fn tunnel_length (&self,_: QueryPriority) -> u8 {
+    3
+  }
+ 
+  #[inline]
   fn nbhop_dec (&self) -> u8{
     1 // most of the time (some time we may random to 0 so we do not know if first hop
   }
@@ -311,8 +317,8 @@ static CMODE : dhtif::ClientMode = dhtif::ClientMode::ThreadedOne;
 
 struct RunningTypesImpl<M : PeerMgmtMeths<Node, DummyKeyVal>, T : Transport, E : MsgEnc> (PhantomData<M>,PhantomData<T>, PhantomData<E>);
 
-impl<M : PeerMgmtMeths<Node, DummyKeyVal>, T : Transport<Address=SocketAddr>, E : MsgEnc> RunningTypes for RunningTypesImpl<M, T, E> {
-  type A = SocketAddr;
+impl<M : PeerMgmtMeths<Node, DummyKeyVal>, T : Transport<Address=SerSocketAddr>, E : MsgEnc> RunningTypes for RunningTypesImpl<M, T, E> {
+  type A = SerSocketAddr;
   type P = Node;
   type V = DummyKeyVal;
   type M = M;

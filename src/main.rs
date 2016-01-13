@@ -46,7 +46,6 @@ use std::sync::Arc;
 //use std::io::SeekFrom;
 use std::fs::File;
 use std::io::stdin;
-use std::net::SocketAddr;
 use time::Duration;
 use mydht_bincode::Bincode;
 //use mydht::Bencode; TODO reenable
@@ -55,6 +54,8 @@ use mydht::Json;
 
 use mydht_udp::Udp;
 use mydht_tcp::Tcp;
+// TODO reexport in mydht
+use mydht_base::transport::SerSocketAddr;
 use mydht::dhtif::{Peer,PeerMgmtMeths};
 use mydht::{DHT,RunningContext,ArcRunningContext,RunningProcesses,RunningTypes};
 use mydht::{PeerPriority,StoragePriority,QueryChunk,QueryMode,QueryConf};
@@ -235,7 +236,7 @@ treshold  : 2,
   struct RunningTypesImpl;
 
   impl RunningTypes for RunningTypesImpl {
-    type A = SocketAddr;
+    type A = SerSocketAddr;
     type P = RSAPeer;
     type V = MulKV;
     type M = WotAccess;
